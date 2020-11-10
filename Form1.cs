@@ -36,8 +36,15 @@ namespace osuHtmlMpParser
 
             playerStrings.Clear();
 
-            string mapSplitPattern = "mp-history-events__game";
+
+            string mapSplitPattern = "<div class=\"mp-history-content__item\"><div class=\"mp-history-game\">";
             List<string> mapStrings = Regex.Split(htmlString, mapSplitPattern).ToList<string>();
+
+            if (mapStrings.Count == 1)
+            {
+                mapSplitPattern = "mp-history-events__game";
+                mapStrings = Regex.Split(htmlString, mapSplitPattern).ToList<string>();
+            }
 
             string lastMapEndPattern = "</span></div></div></div></div></div></div></div></div>";
             mapStrings[mapStrings.Count - 1] = Regex.Split(mapStrings[mapStrings.Count - 1], lastMapEndPattern)[0];
@@ -50,7 +57,8 @@ namespace osuHtmlMpParser
                 playerStrings.AddRange(Regex.Split(map, playerSplitPattern));
             }
 
-            string dogshit = "\"><div class=\"mp-history-game\"><a class=\"mp-history-game__header";
+            //string dogshit = "\"><div class=\"mp-history-game\"><a class=\"mp-history-game__header";
+            string dogshit = "mp-history-game__header";
             for (int i = 0; i < playerStrings.Count; i++)
             {
                 if (playerStrings[i].Contains(dogshit)) playerStrings[i] = "0";
