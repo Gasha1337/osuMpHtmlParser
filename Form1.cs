@@ -19,6 +19,7 @@ namespace osuHtmlMpParser
         static List<string> playerStrings = new List<string>();
         static List<string> addedNicknames = new List<string>();
         static string stringAfterNickname = @"https://osu.ppy.sh/rankings/osu/performance";
+        static string stringBeforeNickname1 = @"https://osu.ppy.sh/users";
 
         public Form1()
         {
@@ -67,21 +68,23 @@ namespace osuHtmlMpParser
             
             var playerStrings1 = playerStrings.Where(s => s != "0").ToList<string>();
             addedNicknames.Clear();
-            
 
             foreach (var player in playerStrings1)
             {
-                int indexNickname = player.IndexOf(stringAfterNickname);
-                string nickname = player.Substring(indexNickname - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
-                
-                if (addedNicknames.Contains(nickname)) break;
+                int indexNickname = player.IndexOf(stringBeforeNickname1);
+                string nickname = player.Substring(indexNickname + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
+
+                if (addedNicknames.Contains(nickname)) continue;
                 else
                 {
                     richTextBox2.Text += nickname + " ";
                     foreach (var player1 in playerStrings1)
                     {
-                        int indexNickname1 = player1.IndexOf(stringAfterNickname);
-                        string s_nickname = player1.Substring(indexNickname1 - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                        //int indexNickname1 = player1.IndexOf(stringAfterNickname);
+                        //string s_nickname = player1.Substring(indexNickname1 - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                        int indexNickname1 = player1.IndexOf(stringBeforeNickname1);
+                        string s_nickname = player1.Substring(indexNickname1 + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
+
                         if (s_nickname == nickname)
                         {
                             string stringBeforeScore = "mp-history-player-score__stat-number mp-history-player-score__stat-number--large";
@@ -117,8 +120,8 @@ namespace osuHtmlMpParser
                 {
                     string stringBeforeScore = "mp-history-player-score__stat-number mp-history-player-score__stat-number--large";
                     int indexScore = player.IndexOf(stringBeforeScore);
-                    int indexNickname = player.IndexOf(stringAfterNickname);
-                    string nickname = player.Substring(indexNickname - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                    int indexNickname = player.IndexOf(stringBeforeNickname1);
+                    string nickname = player.Substring(indexNickname + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
                     string score = player.Substring(indexScore + stringBeforeScore.Length, 100).Split('>')[1].Split('<')[0];
                     score = score.Replace(",", string.Empty);
                     richTextBox2.Text += nickname + ": " + score + "\n";
@@ -135,17 +138,18 @@ namespace osuHtmlMpParser
 
             foreach (var player in playerStrings1)
             {
-                int indexNickname = player.IndexOf(stringAfterNickname);
-                string nickname = player.Substring(indexNickname - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                int indexNickname = player.IndexOf(stringBeforeNickname1);
+                string nickname = player.Substring(indexNickname + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
 
-                if (addedNicknames.Contains(nickname)) break;
+                if (addedNicknames.Contains(nickname)) continue;
                 else
                 {
                     richTextBox2.Text += nickname + "\n";
                     foreach (var player1 in playerStrings1)
                     {
-                        int indexNickname1 = player1.IndexOf(stringAfterNickname);
-                        string s_nickname = player1.Substring(indexNickname1 - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                        int indexNickname1 = player1.IndexOf(stringBeforeNickname1);
+                        string s_nickname = player1.Substring(indexNickname1 + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
+
                         if (s_nickname == nickname)
                         {
                             string stringBeforeScore = "mp-history-player-score__stat-number mp-history-player-score__stat-number--large";
@@ -171,17 +175,18 @@ namespace osuHtmlMpParser
 
             foreach (var player in playerStrings1)
             {
-                int indexNickname = player.IndexOf(stringAfterNickname);
-                string nickname = player.Substring(indexNickname - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                int indexNickname = player.IndexOf(stringBeforeNickname1);
+                string nickname = player.Substring(indexNickname + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
 
-                if (addedNicknames.Contains(nickname)) break;
+                if (addedNicknames.Contains(nickname)) continue;
                 else
                 {
                     richTextBox2.Text += nickname + " ";
                     foreach (var player1 in playerStrings1)
                     {
-                        int indexNickname1 = player1.IndexOf(stringAfterNickname);
-                        string s_nickname = player1.Substring(indexNickname1 - stringAfterNickname.Length - 20, 50).Split('<')[0].Split('>')[1];
+                        int indexNickname1 = player1.IndexOf(stringBeforeNickname1);
+                        string s_nickname = player1.Substring(indexNickname1 + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
+
                         if (s_nickname == nickname)
                         {
                             string stringBeforeScore = "mp-history-player-score__stat-number mp-history-player-score__stat-number--large";
