@@ -60,6 +60,7 @@
             this.richTextBox2.Size = new System.Drawing.Size(854, 409);
             this.richTextBox2.TabIndex = 2;
             this.richTextBox2.Text = "";
+            this.richTextBox2.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox2_LinkClicked);
             // 
             // label1
             // 

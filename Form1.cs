@@ -18,9 +18,10 @@ namespace osuHtmlMpParser
 
         static List<string> playerStrings = new List<string>();
         static List<string> addedNicknames = new List<string>();
-        static string stringAfterNickname = @"https://osu.ppy.sh/rankings/osu/performance";
+        //static string stringAfterNickname = @"https://osu.ppy.sh/rankings/osu/performance";
         static string stringBeforeNickname1 = @"https://osu.ppy.sh/users";
 
+        static List<string> playerStringsTest;
         public Form1()
         {
             InitializeComponent();
@@ -60,6 +61,7 @@ namespace osuHtmlMpParser
 
             //string dogshit = "\"><div class=\"mp-history-game\"><a class=\"mp-history-game__header";
             string dogshit = "mp-history-game__header";
+            playerStringsTest = playerStrings.ToList();
             for (int i = 0; i < playerStrings.Count; i++)
             {
                 if (playerStrings[i].Contains(dogshit)) playerStrings[i] = "0";
@@ -105,16 +107,31 @@ namespace osuHtmlMpParser
 
         private void button2_Click(object sender, EventArgs e)
         {
+            List<string> mapsPlayed = new List<string>();
             richTextBox2.Clear();
             int indexMap = 0;
             
-            foreach (var player in playerStrings)
+            foreach (var player in playerStringsTest)
             {
-                if (player == "0")
+                if (player.Contains("class=\"mp-history-game__header\" href=\""))
                 {
+                    string stringBeforeMap = "class=\"mp-history-game__header\" href=\"";
+                    int indexMapString = player.IndexOf(stringBeforeMap);
+                    string mapLink = player.Substring(indexMapString + stringBeforeMap.Length, 40).Split('"')[0];
+
+                    mapsPlayed.Add(mapLink);
+                    int countDuplicates = 0;
+                    foreach (string item in mapsPlayed)
+                    {
+                        if (item == mapLink) countDuplicates++;
+                    }
+
+
                     if (indexMap != 0) richTextBox2.Text += "\n";
                     indexMap++;
-                    richTextBox2.Text += "MAP № " + indexMap +"\n";
+                    if (countDuplicates > 1) richTextBox2.Text += "MAP № " + indexMap +"  "+mapLink+" attempt №"+countDuplicates+"\n";
+                    else richTextBox2.Text += "MAP № " + indexMap + "  " + mapLink + "\n";
+
                 }
                 else
                 {
@@ -203,6 +220,11 @@ namespace osuHtmlMpParser
 
             }
 
+        }
+
+        private void richTextBox2_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
         }
 
         // class="mp-history-player-score__username" href
