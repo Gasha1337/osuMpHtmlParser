@@ -92,6 +92,11 @@ namespace osuHtmlMpParser
                             string stringBeforeScore = "mp-history-player-score__stat-number mp-history-player-score__stat-number--large";
                             int indexScore = player1.IndexOf(stringBeforeScore);
                             string score = player1.Substring(indexScore + stringBeforeScore.Length, 100).Split('>')[1].Split('<')[0];
+                            if (score.Contains("&nbsp;"))
+                            {
+                                var index = score.IndexOf("&nbsp;");
+                                score = score.Remove(index, 6);
+                            }
                             score = score.Replace(",", string.Empty);
 
                             richTextBox2.Text += score + " ";
@@ -141,6 +146,12 @@ namespace osuHtmlMpParser
                     string nickname = player.Substring(indexNickname + stringBeforeNickname1.Length, 50).Split('<')[0].Split('>')[1];
                     string score = player.Substring(indexScore + stringBeforeScore.Length, 100).Split('>')[1].Split('<')[0];
                     score = score.Replace(",", string.Empty);
+                    if (score.Contains("&nbsp;"))
+                    {
+                        var index = score.IndexOf("&nbsp;");
+                        score = score.Remove(index, 6);
+                    }
+                    
                     richTextBox2.Text += nickname + ": " + score + "\n";
                 }
                 
@@ -173,6 +184,12 @@ namespace osuHtmlMpParser
                             int indexScore = player1.IndexOf(stringBeforeScore);
                             string score = player1.Substring(indexScore + stringBeforeScore.Length, 100).Split('>')[1].Split('<')[0];
                             score = score.Replace(",", string.Empty);
+                            if (score.Contains("&nbsp;"))
+                            {
+                                var index = score.IndexOf("&nbsp;");
+                                score = score.Remove(index, 6);
+                            }
+                            
 
                             richTextBox2.Text += score +"\n";
                         }
@@ -210,6 +227,11 @@ namespace osuHtmlMpParser
                             int indexScore = player1.IndexOf(stringBeforeScore);
                             string score = player1.Substring(indexScore + stringBeforeScore.Length, 100).Split('>')[1].Split('<')[0];
                             score = score.Replace(",", string.Empty);
+                            if (score.Contains("&nbsp;"))
+                            {
+                                var index = score.IndexOf("&nbsp;");
+                                score = score.Remove(index, 6);
+                            }
 
                             richTextBox2.Text += score + " ";
                         }
